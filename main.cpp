@@ -1,57 +1,75 @@
 // CONSTRUCCIÓN DE LA PILA
 #include <iostream>
-using namespace std; //espacio de trabajo estándar
+using namespace std;
 
 // La caja
 struct vox{
-    int v;  //Valor normal para guardar en la caja
-    vox *sgt;   //Puntero para apuntar a otra caja
+    char nombre;
+    char apellido;
+    String fecha;
+    int numExpediente;
+    vox *sgt;
 };
 
-vox *peek = NULL; //Puntero de tipo vox
+vox *peek = NULL;
 
-void push(int x){ //meter en la pila
-   vox *nvox =  new vox; // Crear una instancia y apunta a una dirección cualquiera en la memoria
-   nvox->v=x,nvox->sgt=peek; // el valor x se guarda en v donde apunta el puntero | el puntero peek se guarda en sgt
-   peek=nvox; // el puntero nvox se guarda en peek para poder guardar la siguiente caja
+void push(char nombre, char apellido, String fecha, int numExpediente){
+    vox *nvox =  new vox;
+    nvox->nombre=nombre;
+    nvox->apellido=apellido;
+    nvox->fecha=fecha;
+    nvox->numExpediente=numExpediente;
+    peek=nvox;
 }
-void pop(){ //sacar de la pila
-    if(peek==NULL) // Si el puntero no apunta a nada, si esta vacia la pila
+void pop(){
+    if(peek==NULL)
         cout<<"Nada que imprimir, Stack vacia \n";
     else
-    peek=peek->sgt; //peek avanza a sgt y lo guarda en peek
+        peek=peek->sgt;
 }
 void prt(){
-     vox *aux = peek;
-     if(aux==NULL)
-         cout<<"Nada que imprimir, Stack vacia\n";
-     else
-         while(aux!=NULL){ // va iterando hasta que no quede nada
-             cout<<aux->v<<" -> ";
-             aux=aux->sgt; //aux avanza a sgt y lo guarda en aux
-         }
+    vox *aux = peek;
+    if(aux==NULL)
+        cout<<"Nada que imprimir, Stack vacia\n";
+    else
+        while(aux!=NULL){
+            cout<<aux->nombre;
+            cout<<aux->apellido;
+            cout<<aux->fecha;
+            cout<<aux->numExpediente;
+            aux=aux->sgt;
+        }
 }
 int main(){
-    int op, x;
+    int op;
     do{
         cout<<"\n(1) Push    (2) Pop    (3) Print   (4) Salir \n ";
-        cout<<"\n Elija ppcion  ?: ",cin>>op; //Control de entrada
+        cout<<"\n Elija opcion  ?: ",cin>>op; //Control de entrada
         switch (op){
-            case 1:
-                cout<<"Ingresa el valor a insertar en el Stack : ??  ",cin>>x; //Guarda el valor en x
-                push(x);
+            case 1: //Guardar datos en la caja
+                char n;
+                cout<<"Nombre: ??  ",cin>>n;
+                char a;
+                cout<<"Apellido: ??  ",cin>>a;
+                String f;
+                cout<<"Fecha: ??  ",cin>>f;
+                int nE;
+                cout<<"numExpediente: ??  ",cin>>nE;
+                push(n, a, f, nE);
                 break;
-            case 2:
+
+            case 2: //Eliminar caja
                 cout<<"Eliminando ..... : ";
                 pop();
                 break;
-            case 3:
+
+            case 3: //Imprimir datos en la caja
                 cout<<"Imprimiendo..... : ";
                 prt();
                 break;
-            case 4:
-                cout<<"------Bye--------";
+
+            case 4: // Finalizar el programa
+                cout<<"------Programa finalizado--------";
         }
     }while(op!=4);
 }
-
